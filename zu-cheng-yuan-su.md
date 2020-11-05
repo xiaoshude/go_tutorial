@@ -1,4 +1,4 @@
-# 程序的基本组成元素
+# 程序的基本组成元素
 
 理解一段程序的通用策略：
 
@@ -25,10 +25,12 @@ go里 25个关键字。
 
 另外还有30多个名称被内置常量、类型和函数占用。如果使用就会覆盖内置声明。后面我们会逐渐遇到。
 
-下面说下不同于 js 的一些地方。
+下面说下不同于 js 的一些地方：
 
-1、包的名字总是由小写字母组成。比如最常用的 fmt 包。
+1、包的名字总是由小写字母组成。比如最常用的 fmt 包。 
+
 2、驼峰命名，这点和 js 一样。 
+
 3、首字母大写，指示声明包外可见（前提是，声明本身不在块级作用域内）。所以，我们使用的包的方法都是大写字母开头的。
 
 ## 声明
@@ -41,7 +43,9 @@ go里 25个关键字。
 ### 类型
 
 一个变量分为两部分： 
+
 1. 值 
+
 2. 类型
 
 类型的本质是一个特性集的名字。所以每个类型都携带丰富信息：
@@ -53,7 +57,7 @@ go里 25个关键字。
 
 JS 本身没有自定义类型的能力，TS 提供自定义类型和编译时校验。 这里对比下 TS 的类型和 Go 的类型。
 
-1. ts 是鸭子类型，只要结构一致，就认为是相同的类型，可以互相赋值。
+1,TS 是鸭子类型，只要结构一致，就认为是相同的类型，可以互相赋值。
 
 [下面的例子](https://www.typescriptlang.org/play?#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKymAAmkYI7NCuqGqcANag8ABmIjQUXrFOKBJMggBcISGgoAC0oACCoASMFmgY7p7ehCTkVOle4jUMdRLYTqCc8LEZzCZmoNJODPHFZZXVtZYYkAAeRJTInDQS8po+rf40gnjbDKv8LqD2jpbYoACqAEoAMsK7sUmxkGSCc+VVQQuaTwVb1UBrDYULY7PagbgUZLJH6QbYmJAECjuMigZEMVDsJzCFLNXxtajBBCcQQ0MwAUVWDEQNUgADVHBQGNJ3KAALygABEAAkYNAMOB4GRogLFFTBPB3AExcwABT0xnM9zsyhc9wASmCKhwDQ8ZC8iElzhB7Bo3zcZmY7AYzEg-Fg0HUiS58D0Ii8AoZTJZggFSRxAvADlQAHJhAA5SASAVBFQAeW+ZF2gldWkgx1QjgUrmkeFATgtOlGWH0KAQiBhwiudokkuiIgMHBx3RYbC43CCJUUqBaxn5AG9UPlBuxENIfgBfIcj6R80ATqecGdzsiLxTuGiwKficeT0AARkX+-hU5XJ6nF+Crn5sGCQA%20)
 
@@ -67,7 +71,7 @@ let d: b = {t: 1}
 d = c
 ```
 
-ts 这样的做的是为了兼容js动态特性。
+ts 这样做是为了兼容js动态特性。
 
 go 中不是这这样，比如
 
@@ -78,7 +82,7 @@ type fahrenheit float64
 
 虽然上面两个自定义类型底层类型都是 float64，但他们不同的名字指示了两种类型具有不同的语义，进而操作上的不兼容。这是一个很有用的特性，可以进一步切分基本类型以便表达不同的语义。
 
-1. 类型转换
+2.类型转换
 
 js 中内置类型的构造函数本身也承担着类型转换的作用，比如：
 
@@ -87,7 +91,7 @@ String(1)
 // output '1'
 ```
 
-在 go 中也类似，每一个自定义类型本身也是类型转换函数。
+在 go 中类似，每一个自定义类型本身也是类型转换函数。
 
 ```go
 package main
@@ -164,27 +168,29 @@ type Reader interface {
 
 ### 短变量声明
 
-在滴一部分声明提到，const、var 关键字，go 为变量声明、指定变量类型、赋值这一连贯操作提供一个简化写法：
+在第一部分「声明」中提到 const、var 关键字，go 为变量声明、指定变量类型、赋值这一连贯操作提供一个简化写法：
 
 ```go
 a := 1
 ```
 
-同时完成了 a 变量声明、赋值为 1、同时推导 a 的类型为 int。
+同时完成了 a 变量声明、赋值为 1、推导 a 的类型为 int。
 
-当前作用域已经声明 a 后，这种写法并不会报错，而是等价于赋值。这种声明有一个名字：短变量声明。 之后在 go 代码中遇到最多的就是这种声明方式了。
+当前作用域已经声明 a 后，这种写法并不会报错，而是等价于赋值。这种声明有一个名字：短变量声明。 之后遇到最多的就是这种声明方式了。
 
 ## 赋值
 
-这赋值方面，js 具备的能力 go 都具备，比如： 
+赋值方面，js 具备的能力 go 都具备，比如： 
+
 1、 `count *= scale` 避免在表达式中重复变量本身 
+
 2、数字变量的自增和自减
 
 除此之外，比 js 还多一项能力：多重赋值。
 
 ### 多重赋值
 
-指多个变量一次性被赋值。比如最常见的场景：交换变量。】
+指多个变量一次性被赋值。比如最常见的场景：交换变量。
 
 ```go
 x, y = y, x
@@ -203,6 +209,8 @@ _, err = io.Copy(dst, src) // 丢弃字节个数
 _, err = x.(T) // 类型转换
 ```
 
+这也引入了 go 的错误处理风格：错误作为返回值，是正常流的一部分。
+
 最后关于赋值补充两个主题：
 
 1、隐式赋值。程序中的很多赋值都是隐式进行的。比如：调用函数时的参数值传递。
@@ -215,21 +223,21 @@ _, err = x.(T) // 类型转换
 
 在go 中对应es6 中模块的概念是包。不过包的单元是文件夹。一个包等价于把包内各文件合并成一个大文件，所以变量可以在包内自由的跨文件共享。
 
-慢慢你会发现这样设计的好处： 当随着功能的增多：拆分文件没有任何阻力，变量、函数不需要 export去 import 来。在 js 中完全是另一番场景。
+慢慢你会发现这样设计的好处： 当随着功能的增多，拆分文件没有任何阻力，变量、函数不需要 export 去 import 来。而 js 中完全另一番场景。
 
-go 为开发大型应用设计，重构会不断穿插在整个开发过程。此刻你会体会到 go 的第一条原则：
+go 为开发大型应用设计，重构会穿插在整个开发过程。 第一条原则：
 
-如果向好的方向发展，go 会尽力消除改变的阻力。相反的，坏味道的代码会被直接禁止。
+如果向好的方向发展，go 会尽力消除改变的阻力。相反的，坏味道代码会被直接禁止。
 
 ## 项目组织
 
-这是一个很大的主题，这里聚焦在依赖管理。
+这里聚焦在依赖管理。
 
-go 对代码的共享是文件级别的，这一直是我最欣赏的特点之一。 极大的便利了代码的共享，并且反过来促进了代码的复用性 —— 指不定其他项目可以 import 呢。 反过来看 js，为了共享要新建个 npm package、 npm publish、npm link... 简直头大。
+go 对代码的共享是文件级别的，是我最欣赏的特点之一。 极大的便利了代码的共享，并且反过来促进了代码的复用性 —— 指不定其他项目可以 import 呢。 反过来看 js，为了共享要新建个 npm package、 npm publish、npm link... 简直头大。
 
 不过 js 借助 git submodule 也可达到直接文件共享的效果。
 
-我们回到依赖管理，一个典型的 go 项目文件结构：
+回到依赖管理，一个典型的 go 项目文件结构：
 
 ```bash
 ├── LICENSE
@@ -253,5 +261,5 @@ go 对代码的共享是文件级别的，这一直是我最欣赏的特点之�
 
 在 js 中是没有这个钩子的，当需要引入执行时我们可以写自执行函数。那这个钩子的设计是不是多余呢？
 
-因为 init 函数的存在，显示的表明：包的引入即产生副作用。
+因为 init 函数的存在，显式的表明：包的引入即产生副作用。
 
